@@ -39,9 +39,9 @@
  '(custom-enabled-themes '(pleasant-greens))
  '(custom-file "~/.emacs.d/custom.el")
  '(custom-safe-themes
-   '("1301f2a53066d132295757da03efc602e07b3b57d2339b00fc3684e4d0a5204e"
+   '("b785d0ad12b0e661443aa636b4eaf012d75a252b1e5fae6e2c16ef80dcb32add"
+     "1301f2a53066d132295757da03efc602e07b3b57d2339b00fc3684e4d0a5204e"
      default))
-;; '(default-frame-alist '((top . 200) (left . 400) (width . 80) (height . 40)))
  '(desktop-save 'ask)
  '(desktop-save-mode t)
  '(dired-auto-revert-buffer 'dired-directory-changed-p)

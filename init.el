@@ -185,14 +185,12 @@ Image types are symbols like `xbm' or `jpeg'."
 (defun send-current-line-to-kitty ()
   "Send the current line to Kitty terminal."
   (interactive)
-  (let ((current-line (thing-at-point 'line t)))
+  (let ((current-line (string-trim (thing-at-point 'line t))))
     (start-process-shell-command
      "send-to-kitty" nil
-     (concat
-      "echo "
-      (shell-quote-argument current-line)
-      "| kitten @ --to unix:/run/user/1000/kitty.sock "
-      "send-text --stdin"))
+     (concat "echo " (shell-quote-argument current-line)
+	     "| kitten @ --to unix:/run/user/1000/kitty.sock "
+	     "send-text --stdin"))
     (next-line)))
 
 (require 'sh-script) ;; need sh-mode-map below
