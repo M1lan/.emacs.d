@@ -1,9 +1,9 @@
 ;;; Package --- Summary -*- lexical-binding: t -*-
 ;;
-;;; Commentary: My theme. Don't h8.
+;;; Commentary:
+;; My theme.  Don't h8.
 ;;
 ;;; Code:
-;;
 ;;
 
 (deftheme pleasant-greens
