@@ -1,6 +1,13 @@
 
+
 ** my current emacs setup.
 
 - GNU Emacs 31.0.50
 - Fedora Linux 40 x86_64 Linux 6.10.6-200.fc40.x86_64
+
+note: this repo started out as a fork from magnars/.emacs.d repo, but
+meanwhile the former 'master' branch is renamed to 'magnars' and the
+current master branch is my current config, from scratch. I chose to
+retain the 'magnars' branch for historic / nostalgia purposes...
+
 
