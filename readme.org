@@ -9,19 +9,24 @@ actually no longer a fork of magnars/.emacs.d in the usual
 sense. pardon, I was to lazy to make a new repo.
 
 * ideas
-- "minimal" startup from only 4 files: init, custom, keybinds, and
-theme.  all the rest is pulled in from init.el using straight.el and
-use-package.el. first startup will fetch everything. subsequent
-startups will update.
+- "minimal" startup from 4 files: init, custom, keybinds, and
+  theme. all the rest is pulled in from init.el using straight.el and
+  use-package.el. first startup will fetch everything. subsequent
+  startups will update.
+
 - use M-x customize for everything except faces!
   - try keep custom-set-faces empty
   - put faces into theme instead!
+
 - avoid package.el like the plague!
   - instead we roll with straight.el and use-package.el
+
 - stay away from things like doomemacs or spacemacs.. use vanilla
   GNU/Emacs
+
 - completely ignore existance of Windows and MacOS because with zero
   due respect, fuck Apple and fuck Microsoft.
+
 - no stupidity like "helm" or "evil-mode". THIS. IS. EMACS.
   - modal editing sucks! I want normal editing and shortcuts!
 
