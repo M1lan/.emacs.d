@@ -19,8 +19,8 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7"
-    "#8cc4ff" "#eeeeec"])
+   ["#252525" "#ed4a46" "#70b433" "#dbb32d" "#368aeb" "#eb6eb7"
+    "#3fc5b7" "#181818"])
  '(beacon-color "#d33682")
  '(blink-matching-paren t)
  '(browse-url-firefox-program "firefox-bin")
@@ -29,6 +29,7 @@
  '(column-number-mode t)
  '(company-dabbrev-downcase t)
  '(company-dabbrev-ignore-case t)
+ '(company-minimum-prefix-length 2)
  '(company-require-match nil)
  '(company-selection-wrap-around t)
  '(company-show-quick-access t)
@@ -39,7 +40,20 @@
  '(custom-enabled-themes '(pleasant-greens))
  '(custom-file "~/.emacs.d/custom.el")
  '(custom-safe-themes
-   '("b785d0ad12b0e661443aa636b4eaf012d75a252b1e5fae6e2c16ef80dcb32add"
+   '("833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633"
+     "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36"
+     "285d1bf306091644fb49993341e0ad8bafe57130d9981b680c1dbd974475c5c7"
+     "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1"
+     "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c"
+     "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5"
+     "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773"
+     "3e200d49451ec4b8baa068c989e7fba2a97646091fd555eca0ee5a1386d56077"
+     "524fa911b70d6b94d71585c9f0c5966fe85fb3a9ddd635362bfabd1a7981a307"
+     "efcecf09905ff85a7c80025551c657299a4d18c5fcfedd3b2f2b6287e4edd659"
+     "57a29645c35ae5ce1660d5987d3da5869b048477a7801ce7ab57bfb25ce12d3e"
+     "00445e6f15d31e9afaa23ed0d765850e9cd5e929be5e8e63b114a3346236c44c"
+     "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3"
+     "b785d0ad12b0e661443aa636b4eaf012d75a252b1e5fae6e2c16ef80dcb32add"
      "1301f2a53066d132295757da03efc602e07b3b57d2339b00fc3684e4d0a5204e"
      default))
  '(desktop-save 'ask)
@@ -94,6 +108,8 @@
  '(pdf-view-midnight-colors (cons "#c6c6c6" "#282b33"))
  '(pixel-scroll-precision-mode t)
  '(recentf-auto-cleanup 'never)
+ '(recentf-max-menu-items 99)
+ '(recentf-max-saved-items 50)
  '(recentf-mode t)
  '(red "#ffffff")
  '(rustic-ansi-faces
@@ -128,7 +144,9 @@
  '(vterm-enable-manipulate-selection-data-by-osc52 t)
  '(warning-suppress-log-types '((native-compiler)))
  '(warning-suppress-types '((comp)))
+ '(which-key-mode t)
  '(winner-mode t)
+ '(word-wrap t)
  '(yas-global-mode t))
 
 

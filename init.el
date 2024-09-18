@@ -176,9 +176,9 @@ Image types are symbols like `xbm' or `jpeg'."
   (interactive)
   (start-process-shell-command
    "run-kitty" "*kitty*"
-   (concat "pgrep -xf -- \"kitty -o allow_remote_control=yes "
+   (concat "pgrep -xf -- \"kitty -1 -o allow_remote_control=yes "
 	   "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock\" "
-	   "&> /dev/null || kitty -o allow_remote_control=yes "
+	   "&> /dev/null || kitty -1 -o allow_remote_control=yes "
 	   "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock"
 	   )))
 
@@ -196,10 +196,10 @@ Image types are symbols like `xbm' or `jpeg'."
 (require 'sh-script) ;; need sh-mode-map below
 (define-key sh-mode-map (kbd "C-c C-c") 'send-current-line-to-kitty)
 
-(add-hook 'shell-mode-hook
+(add-hook 'eshell-mode-hook
 	  (lambda ()
 	    (company-mode -1)
-	    (setq display-fill-column-indicator nil)))
+	    (display-fill-column-indicator-mode -1)))
 
 ;; Eshell prompt
 (setq eshell-prompt-function
@@ -241,9 +241,10 @@ Image types are symbols like `xbm' or `jpeg'."
 
 
 ;; Additional modes
-
+(use-package exec-path-from-shell)
 (use-package chatgpt-shell)
 (use-package cov)
+(use-package docker)
 (use-package dockerfile-mode)
 (use-package editorconfig)
 (use-package everlasting-scratch)
@@ -254,7 +255,21 @@ Image types are symbols like `xbm' or `jpeg'."
 (use-package just-mode)
 (use-package magit)
 (use-package protobuf-mode)
+
 (use-package quelpa)
+
+(use-package quelpa-use-package)
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+
 (use-package rainbow-mode)
 (use-package rust-mode)
 (use-package rustic)
@@ -375,5 +390,9 @@ Image types are symbols like `xbm' or `jpeg'."
 
 
 
+
+
+
 (provide 'init)
 ;;; init.el ends here
+(put 'upcase-region 'disabled nil)
