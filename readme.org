@@ -1,5 +1,4 @@
-GNU Emacs 31.0.50 on Linux 6.10.6-200.fc40.x86_64
-
+GNU Emacs 31.0.50 on Linux 6.11.0-0.rc5.43.fc41.x86_64 
 * my current emacs setup
 note: this repo started out as a fork from magnars/.emacs.d repo, but
 meanwhile the former 'master' branch is renamed to 'magnars' branch
