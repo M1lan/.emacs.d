@@ -1,11 +1,6 @@
 ;;; init.el --- Emacs configuration -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;
-;;
-;; Tested on GNU Emacs 31.0.50 (build 1, x86_64-pc-linux-gnu, GTK+
-;; Version 3.24.43, cairo version 1.18.0) of 2024-09-06
-;;
-;;
 ;; No comments.  Let's dive straight in.
 ;;
 
