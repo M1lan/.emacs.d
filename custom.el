@@ -4,9 +4,6 @@
 ;; This file is not edited by hand!  Use M-customize instead.
 ;;
 ;;
-;; Tested on GNU Emacs 31.0.50 (build 1, x86_64-pc-linux-gnu, GTK+
-;; Version 3.24.43, cairo version 1.18.0) of 2024-09-06
-;;
 
 ;;; Code:
 
@@ -40,7 +37,8 @@
  '(custom-enabled-themes '(pleasant-greens))
  '(custom-file "~/.emacs.d/custom.el")
  '(custom-safe-themes
-   '("833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633"
+   '("8bb0936189769d649025f7acbf07a353e76befb87a085631696d8002965acceb"
+     "833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633"
      "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36"
      "285d1bf306091644fb49993341e0ad8bafe57130d9981b680c1dbd974475c5c7"
      "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1"
@@ -65,8 +63,10 @@
  '(dired-recursive-copies 'always)
  '(dired-use-ls-dired t)
  '(display-fill-column-indicator t)
- '(display-line-numbers nil)
+ '(display-line-numbers t)
+ '(display-line-numbers-type 'relative)
  '(dockerfile-enable-auto-indent nil)
+ '(erc-hide-list '("JOIN" "NICK" "PART" "QUIT"))
  '(exwm-replace t)
  '(fci-rule-color "#eee8d5")
  '(fill-column 69)
@@ -79,6 +79,7 @@
  '(global-company-mode t)
  '(global-display-fill-column-indicator-mode t)
  '(global-display-line-numbers-mode nil)
+ '(global-ligature-mode t)
  '(global-prettify-symbols-mode t)
  '(helm-mode t)
  '(highlight-indent-guides-method 'character)
@@ -127,6 +128,7 @@
  '(scroll-bar-mode nil)
  '(server-mode t)
  '(show-paren-mode t)
+ '(speedbar-default-position 'left)
  '(straight-use-package-by-default t)
  '(tool-bar-mode nil)
  '(transient-mark-mode nil)
@@ -155,4 +157,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#001500" :foreground "#FFFF84" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 1.0 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(font-lock-comment-face ((t (:foreground "chartreuse3")))))

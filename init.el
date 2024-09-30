@@ -52,8 +52,8 @@
 
 ;; Golden-ratio scrolling
 (use-package golden-ratio-scroll-screen
-  :bind (("M-<down>" . golden-ratio-scroll-screen-down)
-         ("M-<up>" . golden-ratio-scroll-screen-up)))
+  :bind (("M-<up>" . golden-ratio-scroll-screen-down)
+         ("M-<down>" . golden-ratio-scroll-screen-up)))
 
 ;; Dired tweaks
 ;; hide details. show with (
@@ -88,12 +88,41 @@ Image types are symbols like `xbm' or `jpeg'."
 				  try-complete-file-name))
     (delete func hippie-expand-try-functions-list)))
 
+;; transparency (wayland / pgkt)
+(set-frame-parameter nil 'alpha-background 90)
+(add-to-list 'default-frame-alist '(alpha-background . 95))
+
+;; restore my frame the way I like it best!
+(defun reframe ()
+  "Single-buffer Frame, centered on a 2560x1440 screen."
+  (interactive)
+  (delete-other-windows)
+;;  (delete-other-frames)
+  (set-frame-parameter nil 'fullscreen nil)
+
+  (let ((desired-width 2048)
+        (desired-height 1242)
+        (display-width 2560)
+        (display-height 1440))
+
+    (set-frame-size nil desired-width desired-height t)
+    (let ((new-x (/ (- display-width desired-width) 2))
+          (new-y (/ (- display-height desired-height) 2)))
+      (set-frame-position nil new-x new-y))))
+
+;; do it every time I create a new frame!
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (select-frame frame)
+            (reframe)))
+
 
 ;; mark-whole-buffer && indent-region
 (defun indent-buffer ()
-      (interactive)
-      (save-excursion
-        (indent-region (point-min) (point-max) nil)))
+  "Indent buffer."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
 
 ;; ANSI Colors in Compilation Buffers
 (use-package ansi-color
@@ -108,6 +137,16 @@ Image types are symbols like `xbm' or `jpeg'."
 ;; Terraform mode
 (use-package terraform-mode
   :custom (terraform-format-on-save t))
+
+;; bash completion for shells
+(quelpa '(bash-completion :repo "szermatt/emacs-bash-completion" :fetcher github))
+
+(autoload 'bash-completion-dynamic-complete
+  "bash-completion"
+  "BASH completion hook")
+
+(add-hook 'shell-dynamic-complete-functions
+          'bash-completion-dynamic-complete)
 
 ;; Company mode (autocompletion)
 (use-package company
@@ -131,10 +170,15 @@ Image types are symbols like `xbm' or `jpeg'."
   :commands lsp
   :bind ("M-RET" . lsp-execute-code-action)
   :hook ((go-mode . lsp-deferred)
-         (go-mode . lsp-go-install-save-hooks)
+	 ;;         (go-mode . lsp-go-install-save-hooks)
          (go-mode . yas-minor-mode)))
 
-(use-package yaml-mode)
+;; Go-specific hooks
+(defun lsp-go-install-save-hooks ()
+  "Hooks for Go mode."
+  (add-hook 'before-save-hook #'lsp-format-buffer nil t)
+  (add-hook 'before-save-hook #'lsp-organize-imports nil t))
+
 
 (use-package lsp-ui
   :after lsp-mode
@@ -151,21 +195,13 @@ Image types are symbols like `xbm' or `jpeg'."
          (k8s-mode . yas-minor-mode)))
 (use-package yasnippet-snippets)
 
-;; Go-specific hooks
-(defun lsp-go-install-save-hooks ()
-  "Hooks for Go mode."
-  (add-hook 'before-save-hook #'lsp-format-buffer nil t)
-  (add-hook 'before-save-hook #'lsp-organize-imports nil t))
-
-;; Vterm for better terminal integration
+;; Vterm for better terminal integration (but I do use kitty)
 (use-package vterm
   :hook (vterm-mode . (lambda ()
                         (yas-minor-mode -1)
-                        (display-line-numbers-mode -1)
                         (flycheck-mode -1))))
 
 ;; Kitty terminal integration
-
 (defun start-kitty-and-listen-on-unix-socket ()
   "Start Kitty Terminal listening on unix socket."
   (interactive)
@@ -176,6 +212,7 @@ Image types are symbols like `xbm' or `jpeg'."
 	   "&> /dev/null || kitty -1 -o allow_remote_control=yes "
 	   "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock"
 	   )))
+
 
 (defun send-current-line-to-kitty ()
   "Send the current line to Kitty terminal."
@@ -192,6 +229,11 @@ Image types are symbols like `xbm' or `jpeg'."
 (define-key sh-mode-map (kbd "C-c C-c") 'send-current-line-to-kitty)
 
 (add-hook 'eshell-mode-hook
+	  (lambda ()
+	    (company-mode -1)
+	    (display-fill-column-indicator-mode -1)))
+
+(add-hook 'comint-mode-hook
 	  (lambda ()
 	    (company-mode -1)
 	    (display-fill-column-indicator-mode -1)))
@@ -236,6 +278,7 @@ Image types are symbols like `xbm' or `jpeg'."
 
 
 ;; Additional modes
+(use-package web-mode)
 (use-package exec-path-from-shell)
 (use-package chatgpt-shell)
 (use-package cov)
@@ -250,10 +293,12 @@ Image types are symbols like `xbm' or `jpeg'."
 (use-package just-mode)
 (use-package magit)
 (use-package protobuf-mode)
+(use-package haskell-mode)
 
 (use-package quelpa)
 
 (use-package quelpa-use-package)
+
 (unless (package-installed-p 'quelpa)
   (with-temp-buffer
     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
@@ -269,8 +314,9 @@ Image types are symbols like `xbm' or `jpeg'."
 (use-package rust-mode)
 (use-package rustic)
 (use-package sudo-edit)
-(use-package vlf) (require 'vlf-setup)
+(use-package vlf)
 (use-package xref)
+
 (use-package yaml-mode)
 ;; tree-sitter
 (use-package tree-sitter
@@ -322,8 +368,6 @@ Image types are symbols like `xbm' or `jpeg'."
   (add-to-list 'tree-sitter-major-mode-language-alist
 	       '(typescriptreact-mode . tsx)))
 
-
-
 (use-package tsi.el
   :after tree-sitter
   ;;;  :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
@@ -343,9 +387,6 @@ Image types are symbols like `xbm' or `jpeg'."
   :hook ((text-mode prog-mode vc-dir-mode) . turn-on-diff-hl-mode))
 
 ;; Some hooks :)
-(add-hook 'text-mode-hook (lambda ()
-			    ))
-
 (add-hook 'prog-mode-hook (lambda ()
 			    (display-line-numbers-mode t)
 			    (display-fill-column-indicator-mode t)
@@ -381,13 +422,17 @@ Image types are symbols like `xbm' or `jpeg'."
    "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
    "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
 
-(global-ligature-mode 't)
 
+;; an ancient crude hack to use emacs as pager in M-x shell buffers.
+;; depends on ~/bin/emacs-pipe.rb
+(quelpa '(emacs-pager :repo "mbriggs/emacs-pager" :fetcher github))
+(add-to-list 'auto-mode-alist '("\\.emacs-pager$" . emacs-pager-mode))
 
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
-
-
+(reframe)
 
 (provide 'init)
 ;;; init.el ends here
-(put 'upcase-region 'disabled nil)

@@ -1,7 +1,13 @@
-;;; Package --- Summary -*- lexical-binding: t -*-
+;;; Package --- Summary -*- lexical-binding: t; rainbow-mode -*-
 ;;
 ;;; Commentary:
 ;; My theme.  Don't h8.
+;;
+;; Opinions / Rules:
+;; - theme is only for faces, everything else into custom.el
+;; - no additional faces in init.el and custom.el
+;; - themes are useful for GUI Emacs and maybe TTY but not Terminal.
+;; - for terminal emulator configure your terminal colors instead!
 ;;
 ;;; Code:
 ;;
@@ -11,13 +17,26 @@
 
 (custom-theme-set-faces
  'pleasant-greens
+
  '(default
    ((t (
-	:inherit nil :extend nil :stipple nil :background "#001500"
-	:foreground "#FFFF84" :inverse-video nil :box nil
-	:strike-through nil :overline nil :underline nil
-	:slant normal :weight regular :height 158
-	:width normal :foundry "CTDB" :family "Fira Code"))))
+	:inherit nil
+	:extend nil
+	:stipple nil
+	:background "#001500"
+	:foreground "#FFFF84"
+	:inverse-video nil
+	:box nil
+	:strike-through nil
+	:overline nil
+	:underline nil
+	:slant normal
+	:weight regular
+	:height 142
+	:width normal
+	:foundry "CTDB"
+	:family "Fira Code"))))
+
  '(ansi-color-blue
    ((t(
        :background "#0070bf" :foreground "#0070bf"))))
@@ -86,7 +105,7 @@
 	       normal :weight normal))))
 
  '(font-lock-builtin-face ((t (:foreground "green"))))
- '(font-lock-comment-face ((t (:foreground "chartreuse4"))))
+ '(font-lock-comment-face ((t (:foreground "chartreuse3"))))
  '(font-lock-constant-face
    ((t (:foreground "SeaGreen4" :weight bold :width normal))))
  '(font-lock-function-name-face ((t (:foreground "OliveDrab2"))))
@@ -199,6 +218,7 @@
    ((t (:background "#FFFFAA" :foreground "black"))))
  '(region
    ((t (:extend t :background "forest green" :foreground "black"))))
+ '(sh-quoted-exec ((t (:foreground "magenta"))))
  '(shadow ((t (:foreground "grey32"))))
  '(show-paren-match ((t (:background "gold" :foreground "black"))))
  '(smerge-lower

@@ -9,6 +9,9 @@
 
 ;;; Code:
 
+;; restore frame
+(global-set-key (kbd "s-<XF86MonBrightnessUp>") 'reframe)
+
 ;; Use `ibuffer` instead of the default buffer list.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -70,8 +73,11 @@
 ;; Allow `M-x` without Meta (useful for certain keyboards or terminals).
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
-;; Search more than just commands with `apropos`.
-(global-set-key (kbd "C-h a") 'apropos)
+;; Search more than just commands with `apropos`.(global-set-key (kbd "C-h a") 'apropos)
+
+;; You know, like Readline ;)
+(global-set-key (kbd "C-M-h") 'backward-kill-word)
+(global-set-key (kbd "C-h") 'delete-backward-char)
 
 ;; Evaluate and replace expressions anywhere.
 (global-set-key (kbd "C-c e") 'eval-and-replace)
