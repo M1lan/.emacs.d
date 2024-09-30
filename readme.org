@@ -37,5 +37,4 @@ sense. pardon, I was to lazy to make a new repo.
 
 ** theme: pleasant-greens-theme.el
 here's a screenshot:
-
-![pleasant-greens-theme.el](pleasant_greens.png "screenshot")
+[[./pleasant_greens.png]]
