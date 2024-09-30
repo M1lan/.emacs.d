@@ -55,3 +55,5 @@ site-lisp/adventur-mode
 swank
 tramp
 /quelpa/
+/.cache/
+/image-dired/
