@@ -6,7 +6,7 @@ current config, from scratch. this also means, that this repo is
 actually no longer a fork of magnars/.emacs.d in the usual
 sense. pardon, I was to lazy to make a new repo.
 
-* ideas
+** ideas
 - "minimal" startup from 4 files: init, custom, keybinds, and
   theme. all the rest is pulled in from init.el using straight.el and
   use-package.el. first startup will fetch everything. subsequent
@@ -22,7 +22,7 @@ sense. pardon, I was to lazy to make a new repo.
 - no "helm" or "evil-mode". THIS. IS. EMACS.
   - modal editing sucks! I want normal editing and shortcuts!
 
-* instructions
+** instructions
 - make backup of existing directory ~/.emacs.d/ (just rename it)
 - clone repo to ~/.emacs.d/ or symlink
 - make edits as you see fit
@@ -34,3 +34,8 @@ sense. pardon, I was to lazy to make a new repo.
 - check contents of ~/.emacs.d/ have been updated
 - make sure to keep ~/.emacs.d/.gitignore updated
 - check everything before push changes! don't include secrets!
+
+** theme: pleasant-greens-theme.el
+here's a screenshot:
+
+![pleasant-greens-theme.el](pleasant_greens.png "screenshot")
