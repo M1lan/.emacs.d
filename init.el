@@ -77,8 +77,6 @@
 ;; Seed random number generator
 (random t)
 
-
-
 (use-package svg)
 ;; svg weirdness
 (add-to-list 'image-types 'svg)
@@ -166,6 +164,11 @@ VALUE from 0=transparent/100=opaque."
   (advice-add 'deadgrep--arguments :filter-return
 	      #'deadgrep--include-args))
 
+
+
+(use-package go-mode)
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package project)
 (use-package jsonrpc)
@@ -269,7 +272,8 @@ VALUE from 0=transparent/100=opaque."
 	  'face `(:foreground "green")))))
 
 
-;; etags
+;; etags / gtags
+(use-package gtags-mode)
 (use-package counsel-etags
   ;; :ensure t
   :bind (("C-]" . counsel-etags-find-tag-at-point))
@@ -286,6 +290,10 @@ VALUE from 0=transparent/100=opaque."
 (use-package editorconfig
   :ensure t)
 
+;; google gemini
+;;(use-package google-gemini
+;;  :ensure t)
+
 ;; github copilot
 (use-package copilot)
 (add-hook 'prog-mode-hook 'copilot-mode)
@@ -301,6 +309,13 @@ VALUE from 0=transparent/100=opaque."
 ;; Additional modes
 (use-package web-mode)
 
+;;;; sometimes I actually need this to think.. :-D
+;;(use-package fireplace)
+
+(use-package claudia
+  :commands (claudia-mode))
+
+(use-package uuid)
 
 (defun create-scratch-buffer (&optional nomode)
   "Create a new scratch buffer and switch to it. If the region is active, then
@@ -310,15 +325,13 @@ VALUE from 0=transparent/100=opaque."
   (interactive "P")
   (let (bufname (mjmode  major-mode) (paste (and (region-active-p) (prog1 (buffer-substring (mark t) (point)) (deactivate-mark)))))
     (if (and (not nomode) (boundp 'ess-dialect) ess-dialect)
-        (setq mjmode (intern-soft (concat ess-dialect "-mode"))))
+      (setq mjmode (intern-soft (concat ess-dialect "-mode"))))
     (setq bufname (generate-new-buffer-name "*scratch*"))
     (switch-to-buffer (get-buffer-create bufname))
     (if paste (insert paste))
     (if (and (not nomode) mjmode) (ignore-errors (funcall mjmode)))
     (get-buffer bufname)
     ))
-
-
 
 (use-package polymode
   :ensure t
