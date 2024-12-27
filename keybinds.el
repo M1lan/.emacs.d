@@ -10,7 +10,7 @@
 ;;; Code:
 
 ;; restore frame
-(global-set-key (kbd "s-<XF86MonBrightnessUp>") 'reframe)
+(global-set-key (kbd "s-<MonBrightnessUp>") 'reframe)
 
 ;; Use `ibuffer` instead of the default buffer list.
 (global-set-key (kbd "C-x C-b") 'ibuffer)

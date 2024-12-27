@@ -6,6 +6,14 @@
 
 ;;; Code:
 
+;; no gc during startup
+;; default 800000
+(setq gc-cons-threshold most-positive-fixnum)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 16 1024 1024))))
+
 ;; Load custom file and keybinds separately
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file t)
@@ -69,6 +77,9 @@
 ;; Seed random number generator
 (random t)
 
+
+
+(use-package svg)
 ;; svg weirdness
 (add-to-list 'image-types 'svg)
 ;; overriding image.el function image-type-available-p
@@ -88,34 +99,16 @@ Image types are symbols like `xbm' or `jpeg'."
 				  try-complete-file-name))
     (delete func hippie-expand-try-functions-list)))
 
+
 ;; transparency (wayland / pgkt)
-(set-frame-parameter nil 'alpha-background 90)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
+(defun transparency (value)
+  "Sets the transparency VALUE of the frame window.
+VALUE from 0=transparent/100=opaque."
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
 
-;; restore my frame the way I like it best!
-(defun reframe ()
-  "Single-buffer Frame, centered on a 2560x1440 screen."
-  (interactive)
-  (delete-other-windows)
-;;  (delete-other-frames)
-  (set-frame-parameter nil 'fullscreen nil)
-
-  (let ((desired-width 2048)
-        (desired-height 1242)
-        (display-width 2560)
-        (display-height 1440))
-
-    (set-frame-size nil desired-width desired-height t)
-    (let ((new-x (/ (- display-width desired-width) 2))
-          (new-y (/ (- display-height desired-height) 2)))
-      (set-frame-position nil new-x new-y))))
-
-;; do it every time I create a new frame!
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (select-frame frame)
-            (reframe)))
-
+(set-frame-parameter nil 'alpha-background 100)
+(add-to-list 'default-frame-alist '(alpha-background . 100))
 
 ;; mark-whole-buffer && indent-region
 (defun indent-buffer ()
@@ -130,13 +123,14 @@ Image types are symbols like `xbm' or `jpeg'."
 
 ;; Projectile for project management
 (use-package projectile
-  :config
-  (projectile-mode +1)
-  :bind-keymap ("C-c p" . projectile-command-map))
+ :config
+ :bind-keymap ("C-c p" . projectile-command-map))
 
-;; Terraform mode
-(use-package terraform-mode
-  :custom (terraform-format-on-save t))
+;;(add-hook 'project-find-functions #'project-projectile)
+
+
+(use-package exec-path-from-shell
+  :init (exec-path-from-shell-initialize))
 
 ;; bash completion for shells
 (quelpa '(bash-completion :repo "szermatt/emacs-bash-completion" :fetcher github))
@@ -148,12 +142,19 @@ Image types are symbols like `xbm' or `jpeg'."
 (add-hook 'shell-dynamic-complete-functions
           'bash-completion-dynamic-complete)
 
+
 ;; Company mode (autocompletion)
 (use-package company
   :init (global-company-mode)
   :custom
   (company-idle-delay 0.2)
   (company-minimum-prefix-length 1))
+
+(use-package company-quickhelp)
+
+(use-package wgrep)
+
+(use-package web-beautify)
 
 ;; Deadgrep for fast search
 (use-package deadgrep
@@ -165,29 +166,35 @@ Image types are symbols like `xbm' or `jpeg'."
   (advice-add 'deadgrep--arguments :filter-return
 	      #'deadgrep--include-args))
 
-;; LSP Mode for language server protocol
-(use-package lsp-mode
-  :commands lsp
-  :bind ("M-RET" . lsp-execute-code-action)
-  :hook ((go-mode . lsp-deferred)
-	 ;;         (go-mode . lsp-go-install-save-hooks)
-         (go-mode . yas-minor-mode)))
 
-;; Go-specific hooks
-(defun lsp-go-install-save-hooks ()
-  "Hooks for Go mode."
-  (add-hook 'before-save-hook #'lsp-format-buffer nil t)
-  (add-hook 'before-save-hook #'lsp-organize-imports nil t))
+(use-package project)
+(use-package jsonrpc)
+(use-package eglot)
+(use-package templ-ts-mode)
+
+;; ;; LSP Mode for language server protocol
+;; (use-package lsp-mode
+;;   :commands lsp
+;;   :bind ("M-RET" . lsp-execute-code-action)
+;;   :hook ((go-mode . lsp-deferred)
+;; 	 ;;         (go-mode . lsp-go-install-save-hooks)
+;;          (go-mode . yas-minor-mode)))
+
+;; ;; Go-specific hooks
+;; (defun lsp-go-install-save-hooks ()
+;;   "Hooks for Go mode."
+;;   (add-hook 'before-save-hook #'lsp-format-buffer nil t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports nil t))
 
 
-(use-package lsp-ui
-  :after lsp-mode
-  :custom (lsp-ui-sideline-show-code-actions t))
+;; (use-package lsp-ui
+;;   :after lsp-mode
+;;   :custom (lsp-ui-sideline-show-code-actions t))
 
-;; DAP Mode (Debug Adapter Protocol)
-(use-package dap-mode
-  :after lsp-mode
-  :config (dap-auto-configure-mode))
+;; ;; DAP Mode (Debug Adapter Protocol)
+;; (use-package dap-mode
+;;   :after lsp-mode
+;;   :config (dap-auto-configure-mode))
 
 ;; Snippets
 (use-package yasnippet
@@ -223,7 +230,7 @@ Image types are symbols like `xbm' or `jpeg'."
      (concat "echo " (shell-quote-argument current-line)
 	     "| kitten @ --to unix:/run/user/1000/kitty.sock "
 	     "send-text --stdin"))
-    (next-line)))
+    (forward-line)))
 
 (require 'sh-script) ;; need sh-mode-map below
 (define-key sh-mode-map (kbd "C-c C-c") 'send-current-line-to-kitty)
@@ -276,39 +283,83 @@ Image types are symbols like `xbm' or `jpeg'."
   (setq counsel-etags-update-interval 60)
   (push "build" counsel-etags-ignore-directories))
 
+(use-package editorconfig
+  :ensure t)
+
+;; github copilot
+(use-package copilot)
+(add-hook 'prog-mode-hook 'copilot-mode)
+(define-key copilot-completion-map (kbd "M-RET")
+			'copilot-accept-completion)
+
+(define-key copilot-completion-map (kbd "M-<right>")
+  'copilot-next-completion)
+
+(define-key copilot-completion-map (kbd "M-<left>")
+			'copilot-previous-completion)
 
 ;; Additional modes
 (use-package web-mode)
-(use-package exec-path-from-shell)
-(use-package chatgpt-shell)
+
+
+(defun create-scratch-buffer (&optional nomode)
+  "Create a new scratch buffer and switch to it. If the region is active, then
+ paste the contents of the region in the new buffer. The new buffer inherits
+ the mode of the original buffer unless nomode is set.
+ Return the buffer."
+  (interactive "P")
+  (let (bufname (mjmode  major-mode) (paste (and (region-active-p) (prog1 (buffer-substring (mark t) (point)) (deactivate-mark)))))
+    (if (and (not nomode) (boundp 'ess-dialect) ess-dialect)
+        (setq mjmode (intern-soft (concat ess-dialect "-mode"))))
+    (setq bufname (generate-new-buffer-name "*scratch*"))
+    (switch-to-buffer (get-buffer-create bufname))
+    (if paste (insert paste))
+    (if (and (not nomode) mjmode) (ignore-errors (funcall mjmode)))
+    (get-buffer bufname)
+    ))
+
+
+
+(use-package polymode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode)))
+
+(use-package poly-markdown)
+(use-package poly-org)
+
+;;(use-package chatgpt-shell)
 (use-package cov)
 (use-package docker)
 (use-package dockerfile-mode)
-(use-package editorconfig)
+
 (use-package everlasting-scratch)
 (use-package flycheck)
 (use-package flyspell)
 (use-package go-guru)
 (use-package go-mode)
+(use-package go-ts-mode)
+
 (use-package just-mode)
 (use-package magit)
 (use-package protobuf-mode)
 (use-package haskell-mode)
+(use-package terraform-mode
+  :custom (terraform-format-on-save t))
 
-(use-package quelpa)
+;;(use-package quelpa)
+;;(use-package quelpa-use-package)
 
-(use-package quelpa-use-package)
+;;(unless (package-installed-p 'quelpa)
+;;   (with-temp-buffer
+;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+;;     (eval-buffer)
+;;     (quelpa-self-upgrade)))
 
-(unless (package-installed-p 'quelpa)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-    (eval-buffer)
-    (quelpa-self-upgrade)))
-
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://github.com/quelpa/quelpa-use-package.git"))
+;; (quelpa
+;;  '(quelpa-use-package
+;;    :fetcher git
+;;    :url "https://github.com/quelpa/quelpa-use-package.git"))
 
 (use-package rainbow-mode)
 (use-package rust-mode)
@@ -318,6 +369,10 @@ Image types are symbols like `xbm' or `jpeg'."
 (use-package xref)
 
 (use-package yaml-mode)
+
+(setq ediff-window-setup-function #'ediff-setup-windows-plain
+      ediff-split-window-function #'split-window-horizontally)
+
 ;; tree-sitter
 (use-package tree-sitter
   :config (global-tree-sitter-mode))
@@ -346,27 +401,28 @@ Image types are symbols like `xbm' or `jpeg'."
 	(typescript
 	 "https://github.com/tree-sitter/tree-sitter-typescript"
 	 "master" "typescript/src")
-	(yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+	(yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	(templ "https://github.com/vrischmann/tree-sitter-templ")))
 
+;; (use-package typescript-mode
+;;   :after tree-sitter
+;;   :config
+;;   ;; we choose this instead of tsx-mode so that eglot can
+;;   ;; automatically figure out language for server see
+;;   ;; https://github.com/joaotavora/eglot/issues/624 and
+;;   ;; https://github.com/joaotavora/eglot#handling-quirky-servers
+;;   (define-derived-mode typescriptreact-mode typescript-mode
+;;     "TypeScript TSX")
 
-(use-package typescript-mode
-  :after tree-sitter
-  :config
-  ;; we choose this instead of tsx-mode so that eglot can
-  ;; automatically figure out language for server see
-  ;; https://github.com/joaotavora/eglot/issues/624 and
-  ;; https://github.com/joaotavora/eglot#handling-quirky-servers
-  (define-derived-mode typescriptreact-mode typescript-mode
-    "TypeScript TSX")
+;;   ;; use our derived mode for tsx files
+;;   (add-to-list 'auto-mode-alist
+;; 	       '("\\.tsx?\\'" . typescriptreact-mode))
+;;   ;; by default, typescript-mode is mapped to the treesitter
+;;   ;; typescript parser use our derived mode to map both .tsx AND .ts
+;;   ;; -> typescriptreact-mode -> treesitter tsx
+;;   (add-to-list 'tree-sitter-major-mode-language-alist
+;; 	       '(typescriptreact-mode . tsx)))
 
-  ;; use our derived mode for tsx files
-  (add-to-list 'auto-mode-alist
-	       '("\\.tsx?\\'" . typescriptreact-mode))
-  ;; by default, typescript-mode is mapped to the treesitter
-  ;; typescript parser use our derived mode to map both .tsx AND .ts
-  ;; -> typescriptreact-mode -> treesitter tsx
-  (add-to-list 'tree-sitter-major-mode-language-alist
-	       '(typescriptreact-mode . tsx)))
 
 (use-package tsi.el
   :after tree-sitter
@@ -381,6 +437,8 @@ Image types are symbols like `xbm' or `jpeg'."
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1))))
 
 
+(use-package highlight-indent-guides)
+
 ;; highlight diff
 (use-package diff-hl
   :config
@@ -388,9 +446,9 @@ Image types are symbols like `xbm' or `jpeg'."
 
 ;; Some hooks :)
 (add-hook 'prog-mode-hook (lambda ()
-			    (display-line-numbers-mode t)
+;;			    (display-line-numbers-mode t)
 			    (display-fill-column-indicator-mode t)
-                            (setf truncate-lines t)
+;;                            (setf truncate-lines t)
                             (setq-local subword-mode t)
                             (yas-minor-mode t)
                             (flycheck-mode t)))
@@ -399,6 +457,7 @@ Image types are symbols like `xbm' or `jpeg'."
 			  (go-ts-mode)))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (add-hook 'after-save-hook
 	  'executable-make-buffer-file-executable-if-script-p)
 
@@ -422,17 +481,13 @@ Image types are symbols like `xbm' or `jpeg'."
    "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
    "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
 
-
 ;; an ancient crude hack to use emacs as pager in M-x shell buffers.
 ;; depends on ~/bin/emacs-pipe.rb
-(quelpa '(emacs-pager :repo "mbriggs/emacs-pager" :fetcher github))
-(add-to-list 'auto-mode-alist '("\\.emacs-pager$" . emacs-pager-mode))
+;;(quelpa '(emacs-pager :repo "mbriggs/emacs-pager" :fetcher github))
+;;(add-to-list 'auto-mode-alist '("\\.emacs-pager$" . emacs-pager-mode))
 
-(require 'server)
 (unless (server-running-p)
   (server-start))
-
-(reframe)
 
 (provide 'init)
 ;;; init.el ends here

@@ -57,3 +57,7 @@ tramp
 /quelpa/
 /.cache/
 /image-dired/
+/projects
+/places
+
+secrets.el
