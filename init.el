@@ -11,8 +11,8 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 (add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 16 1024 1024))))
+  (lambda ()
+    (setq gc-cons-threshold (* 16 1024 1024))))
 
 ;; Load custom file and keybinds separately
 (setq custom-file "~/.emacs.d/custom.el")
@@ -24,25 +24,26 @@
 (defun disable-scroll-bars (frame)
   "Disable scrollbars in the given FRAME."
   (modify-frame-parameters frame '((vertical-scroll-bars . nil)
-                                   (horizontal-scroll-bars . nil))))
+									(horizontal-scroll-bars . nil))))
 (add-hook 'after-make-frame-functions 'disable-scroll-bars)
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+
 
 ;; Straight.el Bootstrap for managing packages
 (defvar bootstrap-version)
 
 (let ((bootstrap-file
-       (expand-file-name
-	"straight/repos/straight.el/bootstrap.el"
-	user-emacs-directory))
-      (bootstrap-version 7))
+		(expand-file-name
+		  "straight/repos/straight.el/bootstrap.el"
+		  user-emacs-directory))
+       (bootstrap-version 7))
   (unless
-      (file-exists-p bootstrap-file)
+    (file-exists-p bootstrap-file)
     (with-current-buffer
-	(url-retrieve-synchronously
-	 (concat "https://raw.githubusercontent.com/radian-software/"
-		 "straight.el/develop/install.el")
-	 'silent 'inhibit-cookies)
+	  (url-retrieve-synchronously
+		(concat "https://raw.githubusercontent.com/radian-software/"
+		  "straight.el/develop/install.el")
+		'silent 'inhibit-cookies)
       (goto-char (point-max)) (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
@@ -50,26 +51,29 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+;; use org-mode from straight
+(straight-use-package 'org)
+
 ;; Sane backup settings
 (setq backup-by-copying t
-      backup-directory-alist '(("." . "~/.emacs-backups/"))
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+  backup-directory-alist '(("." . "~/.emacs-backups/"))
+  delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
 
 ;; Golden-ratio scrolling
 (use-package golden-ratio-scroll-screen
   :bind (("M-<up>" . golden-ratio-scroll-screen-down)
-         ("M-<down>" . golden-ratio-scroll-screen-up)))
+          ("M-<down>" . golden-ratio-scroll-screen-up)))
 
 ;; Dired tweaks
 ;; hide details. show with (
 (add-hook 'dired-mode-hook
-	  (lambda ()
-            (dired-hide-details-mode)
-            ;; (dired-sort-toggle-or-edit)
-	    ))
+  (lambda ()
+    (dired-hide-details-mode)
+    ;; (dired-sort-toggle-or-edit)
+	))
 
 ;; ...
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -80,21 +84,22 @@
 (use-package svg)
 ;; svg weirdness
 (add-to-list 'image-types 'svg)
+
 ;; overriding image.el function image-type-available-p
 (defun image-type-available-p (type)
   "Return t if image type TYPE is available.
 Image types are symbols like `xbm' or `jpeg'."
   (if (eq 'svg type)
-      nil
+    nil
     (and (fboundp 'init-image-library)
-         (init-image-library type))))
+      (init-image-library type))))
 
 ;; Hippie expand configuration
 (use-package hippie-exp
   :config
   (dolist (func '(try-expand-line try-expand-list
-				  try-complete-file-name-partially
-				  try-complete-file-name))
+				   try-complete-file-name-partially
+				   try-complete-file-name))
     (delete func hippie-expand-try-functions-list)))
 
 
@@ -121,14 +126,24 @@ VALUE from 0=transparent/100=opaque."
 
 ;; Projectile for project management
 (use-package projectile
- :config
- :bind-keymap ("C-c p" . projectile-command-map))
+  :config
+  :bind-keymap ("C-c p" . projectile-command-map))
 
 ;;(add-hook 'project-find-functions #'project-projectile)
 
+(use-package nushell-mode)
+(use-package csv-mode)
+
+(use-package htmlize)
 
 (use-package exec-path-from-shell
   :init (exec-path-from-shell-initialize))
+
+(use-package evil
+  :straight t)
+
+(use-package vue-mode
+  :straight t)
 
 ;; bash completion for shells
 (quelpa '(bash-completion :repo "szermatt/emacs-bash-completion" :fetcher github))
@@ -138,7 +153,8 @@ VALUE from 0=transparent/100=opaque."
   "BASH completion hook")
 
 (add-hook 'shell-dynamic-complete-functions
-          'bash-completion-dynamic-complete)
+  'bash-completion-dynamic-complete)
+
 
 
 ;; Company mode (autocompletion)
@@ -162,11 +178,11 @@ VALUE from 0=transparent/100=opaque."
     (push "--hidden" rg-args)
     (push "--glob=!.git/" rg-args))
   (advice-add 'deadgrep--arguments :filter-return
-	      #'deadgrep--include-args))
-
+	#'deadgrep--include-args))
 
 
 (use-package go-mode)
+
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 
@@ -174,14 +190,16 @@ VALUE from 0=transparent/100=opaque."
 (use-package jsonrpc)
 (use-package eglot)
 (use-package templ-ts-mode)
+(use-package eglot-tempel)
 
-;; ;; LSP Mode for language server protocol
-;; (use-package lsp-mode
-;;   :commands lsp
-;;   :bind ("M-RET" . lsp-execute-code-action)
-;;   :hook ((go-mode . lsp-deferred)
-;; 	 ;;         (go-mode . lsp-go-install-save-hooks)
-;;          (go-mode . yas-minor-mode)))
+;; LSP Mode for language server protocol
+(use-package lsp-mode
+  :commands lsp
+  :bind ("M-RET" . lsp-execute-code-action)
+  ;;  :hook ((go-mode . lsp-deferred)
+  ;;         (go-mode . lsp-go-install-save-hooks)
+  ;;          (go-mode . yas-minor-mode))
+  )
 
 ;; ;; Go-specific hooks
 ;; (defun lsp-go-install-save-hooks ()
@@ -199,11 +217,12 @@ VALUE from 0=transparent/100=opaque."
 ;;   :after lsp-mode
 ;;   :config (dap-auto-configure-mode))
 
-;; Snippets
-(use-package yasnippet
-  :hook ((go-mode . yas-minor-mode)
-         (k8s-mode . yas-minor-mode)))
-(use-package yasnippet-snippets)
+
+;;; Snippets (currently trying life without yasnippet!)
+;; (use-package yasnippet
+;;   :hook ((go-mode . yas-minor-mode)
+;;          (k8s-mode . yas-minor-mode)))
+;; (use-package yasnippet-snippets)
 
 ;; Vterm for better terminal integration (but I do use kitty)
 (use-package vterm
@@ -216,12 +235,12 @@ VALUE from 0=transparent/100=opaque."
   "Start Kitty Terminal listening on unix socket."
   (interactive)
   (start-process-shell-command
-   "run-kitty" "*kitty*"
-   (concat "pgrep -xf -- \"kitty -1 -o allow_remote_control=yes "
-	   "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock\" "
-	   "&> /dev/null || kitty -1 -o allow_remote_control=yes "
-	   "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock"
-	   )))
+	"run-kitty" "*kitty*"
+	(concat "pgrep -xf -- \"kitty -1 -o allow_remote_control=yes "
+	  "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock\" "
+	  "&> /dev/null || kitty -1 -o allow_remote_control=yes "
+	  "--listen-on unix:/${XDG_RUNTIME_DIR}/kitty.sock"
+	  )))
 
 
 (defun send-current-line-to-kitty ()
@@ -229,47 +248,47 @@ VALUE from 0=transparent/100=opaque."
   (interactive)
   (let ((current-line (string-trim (thing-at-point 'line t))))
     (start-process-shell-command
-     "send-to-kitty" nil
-     (concat "echo " (shell-quote-argument current-line)
-	     "| kitten @ --to unix:/run/user/1000/kitty.sock "
-	     "send-text --stdin"))
+      "send-to-kitty" nil
+      (concat "echo " (shell-quote-argument current-line)
+	    "| kitten @ --to unix:/run/user/1000/kitty.sock "
+	    "send-text --stdin"))
     (forward-line)))
 
 (require 'sh-script) ;; need sh-mode-map below
 (define-key sh-mode-map (kbd "C-c C-c") 'send-current-line-to-kitty)
 
 (add-hook 'eshell-mode-hook
-	  (lambda ()
-	    (company-mode -1)
-	    (display-fill-column-indicator-mode -1)))
+  (lambda ()
+	(company-mode -1)
+	(display-fill-column-indicator-mode -1)))
 
 (add-hook 'comint-mode-hook
-	  (lambda ()
-	    (company-mode -1)
-	    (display-fill-column-indicator-mode -1)))
+  (lambda ()
+	(company-mode -1)
+	(display-fill-column-indicator-mode -1)))
 
 ;; Eshell prompt
 (setq eshell-prompt-function
-      (lambda ()
+  (lambda ()
 	(concat
-	 (propertize "┌─[" 'face `(:foreground "green"))
-	 (propertize
-	  (user-login-name) 'face `(:foreground "forestgreen3"))
-	 (propertize "@" 'face `(:foreground "green"))
-	 (propertize
-	  (system-name) 'face `(:foreground "forestgreen3"))
-	 (propertize "]──[" 'face `(:foreground "green"))
-	 (propertize
-	  (format-time-string "%H:%M" (current-time))
-	  'face `(:foreground "yellow"))
-	 (propertize "]──[" 'face `(:foreground "green"))
-	 (propertize
-	  (concat (eshell/pwd)) 'face `(:foreground "lightblue"))
-	 (propertize "]\n" 'face `(:foreground "green"))
-	 (propertize "└─>" 'face `(:foreground "green"))
-	 (propertize
-	  (if (= (user-uid) 0) " # " " $ ")
-	  'face `(:foreground "green")))))
+	  (propertize "┌─[" 'face `(:foreground "green"))
+	  (propertize
+		(user-login-name) 'face `(:foreground "forestgreen3"))
+	  (propertize "@" 'face `(:foreground "green"))
+	  (propertize
+		(system-name) 'face `(:foreground "forestgreen3"))
+	  (propertize "]──[" 'face `(:foreground "green"))
+	  (propertize
+		(format-time-string "%H:%M" (current-time))
+		'face `(:foreground "yellow"))
+	  (propertize "]──[" 'face `(:foreground "green"))
+	  (propertize
+		(concat (eshell/pwd)) 'face `(:foreground "lightblue"))
+	  (propertize "]\n" 'face `(:foreground "green"))
+	  (propertize "└─>" 'face `(:foreground "green"))
+	  (propertize
+		(if (= (user-uid) 0) " # " " $ ")
+		'face `(:foreground "green")))))
 
 
 ;; etags / gtags
@@ -279,10 +298,10 @@ VALUE from 0=transparent/100=opaque."
   :bind (("C-]" . counsel-etags-find-tag-at-point))
   :init
   (add-hook 'prog-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-			'counsel-etags-virtual-update-tags
-			'append 'local)))
+    (lambda ()
+      (add-hook 'after-save-hook
+		'counsel-etags-virtual-update-tags
+		'append 'local)))
   :config
   (setq counsel-etags-update-interval 60)
   (push "build" counsel-etags-ignore-directories))
@@ -294,17 +313,18 @@ VALUE from 0=transparent/100=opaque."
 ;;(use-package google-gemini
 ;;  :ensure t)
 
-;; github copilot
-(use-package copilot)
-(add-hook 'prog-mode-hook 'copilot-mode)
-(define-key copilot-completion-map (kbd "M-RET")
-			'copilot-accept-completion)
+;;;;;; it just annoys me more than helping me so BYE-BYE!
+;; ;; github copilot
+;; (use-package copilot)
+;; (add-hook 'prog-mode-hook 'copilot-mode)
+;; (define-key copilot-completion-map (kbd "M-RET")
+;;   'copilot-accept-completion)
 
-(define-key copilot-completion-map (kbd "M-<right>")
-  'copilot-next-completion)
+;; (define-key copilot-completion-map (kbd "M-<right>")
+;;   'copilot-next-completion)
 
-(define-key copilot-completion-map (kbd "M-<left>")
-			'copilot-previous-completion)
+;; (define-key copilot-completion-map (kbd "M-<left>")
+;;   'copilot-previous-completion)
 
 ;; Additional modes
 (use-package web-mode)
@@ -317,6 +337,7 @@ VALUE from 0=transparent/100=opaque."
 
 (use-package uuid)
 
+;; some fun
 (defun create-scratch-buffer (&optional nomode)
   "Create a new scratch buffer and switch to it. If the region is active, then
  paste the contents of the region in the new buffer. The new buffer inherits
@@ -333,13 +354,14 @@ VALUE from 0=transparent/100=opaque."
     (get-buffer bufname)
     ))
 
-(use-package polymode
-  :ensure t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode)))
+;; ;; seems broken sometimes so off you go
+;; (use-package polymode
+;;   :ensure t
+;;   :init
+;;   (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode)))
 
-(use-package poly-markdown)
-(use-package poly-org)
+;; (use-package poly-markdown)
+;; (use-package poly-org)
 
 ;;(use-package chatgpt-shell)
 (use-package cov)
@@ -347,7 +369,21 @@ VALUE from 0=transparent/100=opaque."
 (use-package dockerfile-mode)
 
 (use-package everlasting-scratch)
-(use-package flycheck)
+
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode 1))
+
+
+(use-package flymake
+  :bind (("H-e" . flymake-show-project-diagnostics)))
+
+(use-package sh-script
+  :hook (sh-mode . flymake-mode))
+
+
 (use-package flyspell)
 (use-package go-guru)
 (use-package go-mode)
@@ -383,8 +419,18 @@ VALUE from 0=transparent/100=opaque."
 
 (use-package yaml-mode)
 
+
+
+(use-package memoize)
+
+
+(use-package lsp-java
+  :config (add-hook 'java-mode-hook 'lsp))
+
+(use-package emacs-gradle-mode)
+
 (setq ediff-window-setup-function #'ediff-setup-windows-plain
-      ediff-split-window-function #'split-window-horizontally)
+  ediff-split-window-function #'split-window-horizontally)
 
 ;; tree-sitter
 (use-package tree-sitter
@@ -394,28 +440,28 @@ VALUE from 0=transparent/100=opaque."
   :after tree-sitter)
 
 (setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-	(cmake "https://github.com/uyha/tree-sitter-cmake")
-	(css "https://github.com/tree-sitter/tree-sitter-css")
-	(elisp "https://github.com/Wilfred/tree-sitter-elisp")
-	(go "https://github.com/tree-sitter/tree-sitter-go")
-	(gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-	(html "https://github.com/tree-sitter/tree-sitter-html")
-	(javascript
-	 "https://github.com/tree-sitter/tree-sitter-javascript"
-	 "master" "src")
-	(json "https://github.com/tree-sitter/tree-sitter-json")
-	(make "https://github.com/alemuller/tree-sitter-make")
-	(markdown "https://github.com/ikatyang/tree-sitter-markdown")
-	(python "https://github.com/tree-sitter/tree-sitter-python")
-	(toml "https://github.com/tree-sitter/tree-sitter-toml")
-	(tsx "https://github.com/tree-sitter/tree-sitter-typescript"
-	     "master" "tsx/src")
-	(typescript
-	 "https://github.com/tree-sitter/tree-sitter-typescript"
-	 "master" "typescript/src")
-	(yaml "https://github.com/ikatyang/tree-sitter-yaml")
-	(templ "https://github.com/vrischmann/tree-sitter-templ")))
+  '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	 (cmake "https://github.com/uyha/tree-sitter-cmake")
+	 (css "https://github.com/tree-sitter/tree-sitter-css")
+	 (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	 (go "https://github.com/tree-sitter/tree-sitter-go")
+	 (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+	 (html "https://github.com/tree-sitter/tree-sitter-html")
+	 (javascript
+	   "https://github.com/tree-sitter/tree-sitter-javascript"
+	   "master" "src")
+	 (json "https://github.com/tree-sitter/tree-sitter-json")
+	 (make "https://github.com/alemuller/tree-sitter-make")
+	 (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	 (python "https://github.com/tree-sitter/tree-sitter-python")
+	 (toml "https://github.com/tree-sitter/tree-sitter-toml")
+	 (tsx "https://github.com/tree-sitter/tree-sitter-typescript"
+	   "master" "tsx/src")
+	 (typescript
+	   "https://github.com/tree-sitter/tree-sitter-typescript"
+	   "master" "typescript/src")
+	 (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	 (templ "https://github.com/vrischmann/tree-sitter-templ")))
 
 ;; (use-package typescript-mode
 ;;   :after tree-sitter
@@ -437,6 +483,39 @@ VALUE from 0=transparent/100=opaque."
 ;; 	       '(typescriptreact-mode . tsx)))
 
 
+;;;; must-have code-folding or else I'll die of stupid!
+(defface tailwind-folded-class-face
+  '((t :inherit font-lock-keyword-face :weight bold))
+  "Face used for folded Tailwind classes."
+  :group 'html-mode)
+
+(defun fold-tailwind-classes ()
+  "Fold long Tailwind classes in the current buffer.
+This function uses text properties to visually hide the class content
+without modifying the actual buffer content."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "class=\"\\([^\"]+\\)\"" nil t)
+      (let* ((class-start (match-beginning 1))
+              (class-end (match-end 1))
+              (display-text "..."))
+        ;; Remove any existing overlay to prevent stacking
+        (remove-overlays class-start class-end 'tailwind-fold t)
+        ;; Create new overlay for the class content
+        (let ((overlay (make-overlay class-start class-end)))
+          (overlay-put overlay 'tailwind-fold t)
+          (overlay-put overlay 'display display-text)
+          (overlay-put overlay 'face 'tailwind-folded-class-face)
+          (overlay-put overlay 'help-echo
+            (buffer-substring-no-properties class-start class-end)))))))
+
+(defun unfold-tailwind-classes ()
+  "Unfold all previously folded Tailwind classes in the current buffer."
+  (interactive)
+  (remove-overlays (point-min) (point-max) 'tailwind-fold t))
+
+
 (use-package tsi.el
   :after tree-sitter
   ;;;  :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
@@ -450,6 +529,9 @@ VALUE from 0=transparent/100=opaque."
   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1))))
 
 
+(straight-use-package
+  '(ox-tailwind :type git :host github :repo "vascoferreira25/ox-tailwind"))
+
 (use-package highlight-indent-guides)
 
 ;; highlight diff
@@ -459,20 +541,20 @@ VALUE from 0=transparent/100=opaque."
 
 ;; Some hooks :)
 (add-hook 'prog-mode-hook (lambda ()
-;;			    (display-line-numbers-mode t)
-			    (display-fill-column-indicator-mode t)
-;;                            (setf truncate-lines t)
+							;;			    (display-line-numbers-mode t)
+							(display-fill-column-indicator-mode t)
+							;;                            (setf truncate-lines t)
                             (setq-local subword-mode t)
-                            (yas-minor-mode t)
+							;;                            (yas-minor-mode t)
                             (flycheck-mode t)))
 
 (add-hook 'go-mode-hook (lambda ()
-			  (go-ts-mode)))
+						  (go-ts-mode)))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (add-hook 'after-save-hook
-	  'executable-make-buffer-file-executable-if-script-p)
+  'executable-make-buffer-file-executable-if-script-p)
 
 ;;Ligatures! yay!
 (use-package ligature)
@@ -482,25 +564,33 @@ VALUE from 0=transparent/100=opaque."
 
 ;; Enable ligatures in programming modes
 (ligature-set-ligatures
- 'prog-mode
- '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-"
-   "::" ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
-   "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
-   "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
-   "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
-   "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
-   "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
-   "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
-   "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
-   "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  'prog-mode
+  '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-"
+	 "::" ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+	 "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+	 "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+	 "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+	 "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+	 "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+	 "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+	 "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+	 "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
 
 ;; an ancient crude hack to use emacs as pager in M-x shell buffers.
 ;; depends on ~/bin/emacs-pipe.rb
 ;;(quelpa '(emacs-pager :repo "mbriggs/emacs-pager" :fetcher github))
 ;;(add-to-list 'auto-mode-alist '("\\.emacs-pager$" . emacs-pager-mode))
 
+
+
+;; editing server
+(use-package atomic-chrome)
+
 (unless (server-running-p)
   (server-start))
 
+
+(put 'upcase-region 'disabled nil)
+
 (provide 'init)
-;;; init.el ends here
+;;; init.el ends here.

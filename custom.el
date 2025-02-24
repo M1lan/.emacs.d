@@ -140,7 +140,8 @@
  '(custom-enabled-themes '(pleasant-greens))
  '(custom-file "~/.emacs.d/custom.el")
  '(custom-safe-themes
-	'("42c671177193fa0b01db775c79a94fc5d5bfba70e2377a4a8bef024bb1bd0ba5"
+	'("fce739eafa8564f9f7513b4c8a6596ad57d541e402085f0f3f229de2f90e9caf"
+	   "42c671177193fa0b01db775c79a94fc5d5bfba70e2377a4a8bef024bb1bd0ba5"
 	   "a17b44e2b78faeab4435e5d515619f9501ddd573c95a23875f8dfcbca6059f8c"
 	   "5b6dbc107876575f4f54f91b9ec448fbd7906af083d3a13e45843fd9aa8e9ef2"
 	   "2164fa756e7bf6e200d86cf5eaaadf8f63041e354139a106ce677180acab42a1"
@@ -175,7 +176,7 @@
  '(display-line-numbers t)
  '(display-line-numbers-type 'relative)
  '(dockerfile-enable-auto-indent nil)
- '(ediff-split-window-function 'split-window-horizontally t)
+ '(ediff-split-window-function 'split-window-horizontally)
  '(editorconfig-indentation-alist
 	'((ada-mode ada-indent) (ada-ts-mode ada-ts-mode-indent-offset)
 	   (apache-mode apache-indent-level) (awk-mode c-basic-offset)
@@ -307,7 +308,7 @@
  '(inhibit-startup-screen t)
  '(initial-buffer-choice t)
  '(initial-scratch-message
-	";; -*- lexical-binding: t -*-\12\12;; This buffer is for text that is not saved, and for Lisp\12;; evaluation.  To create a file, visit it with ‘C-x C-f’ and enter\12;; text in its buffer.\12")
+	";; -*- lexical-binding: t -*-\12;; This buffer is for text that is not saved, and for Lisp\12;; evaluation.  To create a file, visit it with ‘C-x C-f’ and enter\12;; text in its buffer.\12;;\12;;\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣤⣶⣶⣶⣶⣶⣦⣤⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⢀⣰⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠐⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⢀⣤⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠟⠛⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠛⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠙⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⢸⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠟⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⢀⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠈⢿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠐⣿⣿⠀⠀⠀⣀⣤⣆⢀⣠⣾⠿⠃⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠻⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⢸⡟⡇⢀⡴⠋⢁⣠⡿⢉⡇⢀⣴⣾⣿⣿⣿⣶⣄⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⡿⢁⡴⠋⠉⠙⢾⢷⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠘⣷⡇⠈⢀⣴⣿⣿⣇⢸⡁⠘⠛⠛⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡿⠋⠐⠋⠀⠀⠀⠀⠈⣿⡆⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠉⣻⣾⣿⣿⡟⠋⠘⣦⢧⠀⠀⠀⠀⠀⠀⠈⠙⠋⠉⠉⠉⠛⠿⣿⣨⠝⠂⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠋⠀⠀⠀⣠⣤⣀⠀⢠⣀⢹⡇⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⣼⣿⣿⣿⣯⣄⣀⠀⢠⡄⠀⠀⣀⠀⠀⢠⣴⣖⣶⣶⣤⣀⡤⣶⡭⢷⣞⠃⠀⠀⠀⠀⠀⠀⠛⠛⠻⠏⠀⠀⠀⢠⡿⠀⠉⠁⢸⣿⢹⡇⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⢸⣿⣿⠟⠁⠀⠀⠉⢛⢶⣿⡄⠀⢿⡀⠀⢨⡿⠛⠉⠉⠉⣀⠐⠛⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣦⠀⠀⠀⣸⣿⠈⡇⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⢿⡏⠀⣀⣴⣿⠿⠛⠛⣿⡇⠀⠀⠀⠀⠀⠙⠲⠴⠒⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⢀⣤⠔⠛⠁⢠⡇⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠈⠳⣾⣿⣋⣀⣀⣠⢴⣷⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠿⠋⠀⠀⠀⣠⡟⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⢹⣿⠟⠉⠉⣠⠏⣸⠃⠀⠀⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⡾⠁⠀⠀⣼⠃⢠⡏⠀⠀⠀⠀⠀⠰⠛⠛⣷⠈⠙⠳⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⠒⠛⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⢸⠃⠀⠀⢸⠃⣠⣿⠀⠀⠀⠀⣀⣠⠤⣄⣠⠾⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⢰⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⣿⠀⠀⢀⡇⣀⢻⣬⣷⡄⠀⠸⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡀⡄⠀⠸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠹⣇⠀⠘⣿⠋⠀⠀⠀⠀⠀⠀⣀⣠⣤⠤⠖⢒⣒⣲⣶⣦⣤⣀⠀⢧⢻⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⠀⣾⣟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠙⣦⠀⢹⡀⠀⢀⣠⣶⢛⣉⣁⣴⡼⣿⠿⡟⢻⡟⢻⢙⡟⣿⣷⢼⣾⠀⠀⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠈⢦⠈⢷⡀⢺⣻⣿⡿⠟⡇⢹⡀⢡⣠⣶⣼⣷⣾⣿⣿⣿⡟⠘⢻⠀⢸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡄⣏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠈⢳⡀⠙⢶⣹⣿⢿⣶⣷⣾⣿⣿⣿⢿⢻⣟⣻⠿⠋⡼⠃⠀⢸⡀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢦⡀⠹⣞⢧⡙⠿⠿⠯⠥⠿⠚⠛⠋⢀⣠⠞⠁⠀⠀⣾⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠁⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠙⣏⠻⠦⠤⠤⠤⠴⠶⠖⠛⠉⠀⠀⠀⠀⣰⢣⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡞⠁⠀⢸⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡽⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⢋⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⠋⠀⠀⠀⠸⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠙⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠉⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣷⣀⠀⠀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⠙⣦⡀⠀⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⣶⢤⣀⣀⣠⣤⠴⠞⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣷⠈⠳⣄⠀⠀⠀⠀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠙⢇⠈⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣧⠀⠀⠙⠶⢤⡀⠀\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟⠁⠀⠘⣆⠀⠀⠙⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠙⣆\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠟⠀⠀⠀⠀⠘⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠘\12;; ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⠀⠀⠀⠀⠀⠀\12")
  '(insert-directory-program "ls")
  '(jdee-db-active-breakpoint-face-colors (cons "#222228" "#819cd6"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#222228" "#5b94ab"))
@@ -328,7 +329,10 @@
 	'(("unread" :foreground "#aeee00") ("flagged" :foreground "#0a9dff")
 	   ("deleted" :foreground "#ff2c4b" :bold t)))
  '(objed-cursor-color "#e1c1ee")
+ '(org-export-backends '(ascii beamer html icalendar latex md odt))
  '(org-fold-core-style 'overlays)
+ '(org-html-head-include-scripts nil)
+ '(org-html-htmlize-output-type 'css)
  '(pdf-view-midnight-colors (cons "#c6c6c6" "#282b33"))
  '(pixel-scroll-precision-mode t)
  '(projectile-auto-discover t)
@@ -381,6 +385,7 @@
  '(vc-annotate-very-old-color nil)
  '(visible-bell t)
  '(vterm-enable-manipulate-selection-data-by-osc52 t)
+ '(vue-html-color-interpolations nil)
  '(warning-suppress-log-types '((native-compiler)))
  '(warning-suppress-types '((comp)))
  '(which-key-mode t)
@@ -394,10 +399,25 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ediff-current-diff-A ((t (:extend t :background "#00aadd"))))
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#001500" :foreground "#FFEE84" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 143 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(ediff-current-diff-A ((t (:extend t :background "#003300"))))
+ '(ediff-fine-diff-A ((t (:background "#002200"))))
  '(eglot-inlay-hint-face ((t (:inherit shadow :height 0.9))))
+ '(font-lock-builtin-face ((t (:foreground "deep sky blue"))))
  '(font-lock-comment-face ((t (:foreground "forest green"))))
  '(font-lock-keyword-face ((t (:foreground "chartreuse" :slant oblique))))
  '(font-lock-type-face ((t (:foreground "gold"))))
  '(fringe ((t (:background "#001500"))))
+ '(magit-diff-hunk-heading-highlight ((t (:extend t :foreground "grey20" :inverse-video t))))
+ '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading-highlight :extend t :foreground "salmon4" :inverse-video t))))
+ '(magit-diff-removed ((t (:extend t :background "#111726" :foreground "dark red"))))
+ '(mmm-default-submode-face ((t nil)))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "magenta"))))
+ '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow"))))
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "dodger blue"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "plum"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "light salmon"))))
+ '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "cyan1"))))
+ '(smerge-base ((t (:extend t :background "#ffffaa" :foreground "black"))))
+ '(smerge-markers ((t (:extend t :background "grey85" :foreground "black"))))
  '(web-mode-html-tag-bracket-face ((t (:foreground "green4")))))
