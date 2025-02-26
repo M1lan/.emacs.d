@@ -192,14 +192,14 @@ VALUE from 0=transparent/100=opaque."
 (use-package templ-ts-mode)
 (use-package eglot-tempel)
 
-;; LSP Mode for language server protocol
-(use-package lsp-mode
-  :commands lsp
-  :bind ("M-RET" . lsp-execute-code-action)
-  ;;  :hook ((go-mode . lsp-deferred)
-  ;;         (go-mode . lsp-go-install-save-hooks)
-  ;;          (go-mode . yas-minor-mode))
-  )
+;; ;; LSP Mode for language server protocol
+;; (use-package lsp-mode
+;;   :commands lsp
+;;   :bind ("M-RET" . lsp-execute-code-action)
+;;   ;;  :hook ((go-mode . lsp-deferred)
+;;   ;;         (go-mode . lsp-go-install-save-hooks)
+;;   ;;          (go-mode . yas-minor-mode))
+;;   )
 
 ;; ;; Go-specific hooks
 ;; (defun lsp-go-install-save-hooks ()
@@ -309,6 +309,22 @@ VALUE from 0=transparent/100=opaque."
 (use-package editorconfig
   :ensure t)
 
+;; Additional modes
+(use-package web-mode)
+
+;;;; sometimes I actually need this to think.. :-D
+(use-package fireplace)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;; AI STUFFS (most of this is broken AF)
+
+;;(use-package claudia
+;;  :commands (claudia-mode))
+
+;;(use-package chatgpt-shell)
+
+
 ;; google gemini
 ;;(use-package google-gemini
 ;;  :ensure t)
@@ -326,14 +342,9 @@ VALUE from 0=transparent/100=opaque."
 ;; (define-key copilot-completion-map (kbd "M-<left>")
 ;;   'copilot-previous-completion)
 
-;; Additional modes
-(use-package web-mode)
+(use-package org-ai)
 
-;;;; sometimes I actually need this to think.. :-D
-;;(use-package fireplace)
-
-(use-package claudia
-  :commands (claudia-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package uuid)
 
@@ -363,7 +374,7 @@ VALUE from 0=transparent/100=opaque."
 ;; (use-package poly-markdown)
 ;; (use-package poly-org)
 
-;;(use-package chatgpt-shell)
+
 (use-package cov)
 (use-package docker)
 (use-package dockerfile-mode)
@@ -427,7 +438,11 @@ VALUE from 0=transparent/100=opaque."
 (use-package lsp-java
   :config (add-hook 'java-mode-hook 'lsp))
 
-(use-package emacs-gradle-mode)
+(use-package gradle-mode)
+
+(use-package groovy-mode)
+
+
 
 (setq ediff-window-setup-function #'ediff-setup-windows-plain
   ediff-split-window-function #'split-window-horizontally)
@@ -463,6 +478,8 @@ VALUE from 0=transparent/100=opaque."
 	 (yaml "https://github.com/ikatyang/tree-sitter-yaml")
 	 (templ "https://github.com/vrischmann/tree-sitter-templ")))
 
+
+;;;;;;;; DEPRECATED!
 ;; (use-package typescript-mode
 ;;   :after tree-sitter
 ;;   :config
@@ -482,6 +499,43 @@ VALUE from 0=transparent/100=opaque."
 ;;   (add-to-list 'tree-sitter-major-mode-language-alist
 ;; 	       '(typescriptreact-mode . tsx)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Install tide package
+
+;; Install tide package
+(use-package tide
+  :ensure t
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)))
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+
+;; Configure LSP for Typescript
+(use-package lsp-mode
+  :bind ("M-RET" . lsp-execute-code-action)
+  :hook ((typescript-mode . lsp))
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :commands company-lsp)
+
+;; Enable LSP for Typescript
+(add-hook 'typescript-mode-hook #'lsp)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;; must-have code-folding or else I'll die of stupid!
 (defface tailwind-folded-class-face
